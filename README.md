@@ -2,6 +2,7 @@
 - some of usehooks
 - nvm use v10.15.3
 - npx create-react-app projectName
+- 此工程为MPA
 
 # react新特性
 - Context
