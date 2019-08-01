@@ -1,85 +1,82 @@
 import React, { Component,PureComponent,useState,useRef,useMemo,useCallback,memo,useEffect  } from "react";
+import './App.css';
 
 // class App extends Component {
 // 	render() {
 //     return null;
 //   }
 // }
+let idSeq = Date.now();
 
-function useCounter(count) {
-    const size = useSize();
-    console.log('Counter render');
-    return (
-        <h1 >{count},{size.width}x{size.height}</h1>
-    )
-}
-// // 获取子组件扩展dom元素
-// class Counter extends PureComponent{
-//     speak() {
-//         console.log(`now counter is: ${this.props.count}`)
-//     }
-//     render() {
-//         const {props} = this;
-//         return (
-//             <h1>{props.count}</h1>
-//         )
-//     }
-// }
+function Control(props) {
+    const {addTodo} = props;
+    const inputRef = useRef();
 
-function useCount(defaultCount) {
-    const [count, setCount] = useState(defaultCount);
-    const it = useRef;
+    const onSubmit = (e) => {
+        e.preventDefault();
 
-    useEffect(() => {
-        //用来同步不同渲染周期之间需要相互共享的数据
-        it.current = setInterval(() => {
-            setCount(count => count + 1)
-        }, 1000)
-    }, [])
-    useEffect(() => {
-        if (count >= 10) {
-            clearInterval(it.current);
+        const newText = inputRef.current.value.trim();
+        if(newText.length === 0) {
+            return;
         }
-    })
+        addTodo({
+            id: ++idSeq,
+            text: newText,
+            complete: false,
+        })
 
-    return [count, setCount]
+        inputRef.current.value = ''
+    }
+
+
+    return (
+			<div className="control">
+				<h1>todos</h1>
+				<form onSubmit={onSubmit}>
+					<input
+						type="text"
+						ref={inputRef}
+						className="new-todo"
+						placeholder="What needs to be done?"
+					/>
+				</form>
+			</div>
+		);
 }
 
-function useSize() {
-    // useState初始化默认值
-    const [size, setSize] = useState({
-        width: document.documentElement.clientWidth,
-        height: document.documentElement.clientHeight
-    });
-    const onResize = useCallback(() => {
-        setSize({
-            width: document.documentElement.clientWidth,
-            height: document.documentElement.clientHeight
-        })
+function Todos() {
+    return <div></div>;
+}
+
+
+function TodoList(prop) {
+    const [todos, setTodos] = useState([]);
+
+    const addTodo = useCallback(todo => {
+        setTodos(todo => [...todos, todo]);
+    },[]);
+ 
+    const removeTodo = useCallback((id) => {
+        setTodos(todos => todos.filter(todo => {
+            return todo.id !== id;
+        }))
+    }, [])
+
+    const toggleTodo = useCallback((id) => {
+        setTodos(todos => todos.map(todo => {
+            return todo.id === id
+                ? {
+                    ...todo,
+                    complete: !todo.complete,
+                }
+                : todo;
+        }))
     },[])
 
-    useEffect(() => {
-        window.addEventListener('resize', onResize, false);
-        return () => {
-            window.removeEventListener('resize', onResize, false)
-        }
-    },[]);
-    return size;
-}
-
-
-function App(prop) {
-  const [count, setCount] = useCount(0)
-  const Counter = useCounter(count)
-  const size = useSize();
-
 	return (
-		<div>
-			<button type="button" onClick={() => setCount(count + 1)}>
-				Click ({count}),{size.width}x{size.height}
-			</button>
-			{/* <Counter count={count} /> */}
-			{Counter}
+		<div className="todo-list">
+			<Control addTodo={addTodo} />
+            <Todos removeTodo={removeTodo} toggleTodo={toggleTodo} todos={todos}/>
 		</div>
 	);
 }
@@ -89,4 +86,4 @@ function App(prop) {
 
 
 
-export default App;
+export default TodoList;
