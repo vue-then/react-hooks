@@ -8,7 +8,7 @@ import './App.css';
 // }
 let idSeq = Date.now();
 
-function Control(props) {
+const Control = memo(function Control(props) {
     const {addTodo} = props;
     const inputRef = useRef();
 
@@ -42,18 +42,60 @@ function Control(props) {
 				</form>
 			</div>
 		);
-}
+})
 
-function Todos() {
-    return <div></div>;
-}
+const TodoItem = memo(function TodoItem(props) {
+    const {
+        todo: {
+            id,
+            text,
+            complete
+        },
+        toggleTodo,
+        removeTodo,
+    }  = props;
+
+    const onChange = () => {
+        toggleTodo(id);
+    }
+    const onRemove = () => {
+        removeTodo(id)
+    }
+
+    return (
+        <li className="todo-item"> 
+            <input type="checkbox" onChange={onChange} checked={complete}/>
+            <label className={complete?'complete':''}>{text}</label>
+            <button onClick={onRemove}>&#xd7;</button>
+        </li>
+    );
+})
+
+const Todos = memo(function Todos(props) {
+    const {todos,toggleTodo,removeTodo} = props;
+    return (
+        <ul>
+            {
+                todos.map(todo => {
+                    return <TodoItem
+                        key={todo.id}
+                        todo={todo}
+                        toggleTodo={toggleTodo}
+                        removeTodo={removeTodo}
+                    />
+                })
+            }
+        </ul>
+    );
+})
+const LS_KEY="_$-todos_"
 
 
-function TodoList(prop) {
+const TodoList = memo(function TodoList(prop) {
     const [todos, setTodos] = useState([]);
 
     const addTodo = useCallback(todo => {
-        setTodos(todo => [...todos, todo]);
+        setTodos(todos => [...todos, todo]);
     },[]);
  
     const removeTodo = useCallback((id) => {
@@ -73,13 +115,23 @@ function TodoList(prop) {
         }))
     },[])
 
+    useEffect(() => {
+        const todos = JSON.parse(localStorage.getItem(LS_KEY) || '[]');
+        setTodos(todos);
+    },[])
+
+    useEffect(() => {
+        localStorage.setItem(LS_KEY,JSON.stringify(todos));
+    }, [todos])
+
+
 	return (
 		<div className="todo-list">
 			<Control addTodo={addTodo} />
             <Todos removeTodo={removeTodo} toggleTodo={toggleTodo} todos={todos}/>
 		</div>
 	);
-}
+})
 
 
 
