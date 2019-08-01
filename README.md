@@ -6,7 +6,7 @@
 
 ### react新特性
 - Context
-- ![sql](https://github.com/vue-then/react-hooks/blob/master/img/1.png)
+- ![react-hooks](https://github.com/vue-then/react-hooks/blob/master/img/1.png)
 - ContextType
 - lazy
 - Suspense
@@ -36,6 +36,10 @@
 - 获取子组件或者DOM节点的句柄
 - 渲染周期之间共享数据的存储
 
+### hooks使用法则
+- 只能在顶层运用hooks函数
+- 只能在react组件中，不能在其他普通函数中调用hooks函数
 
-
+### hooks常见问题
+- ![react-hooks](https://github.com/vue-then/react-hooks/blob/master/img/2.png)
 
