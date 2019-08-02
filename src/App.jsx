@@ -13,8 +13,11 @@ import reducer from './reducers.js'
 //     return null;
 //   }
 // }
-let idSeq = Date.now();
 
+let store = {
+    todos: [],
+    incrementCount: 0,
+}
 
 
 function bindActionCreators(actionCreators, dispatch) {
@@ -62,11 +65,12 @@ const Control = memo(function Control(props) {
         //     text: newText,
         //     complete: false,
         // }))
-        addTodo({
-            id: ++idSeq,
-            text: newText,
-            complete: false,
-        })
+        // addTodo({
+        //     id: ++idSeq,
+        //     text: newText,
+        //     complete: false,
+        // })
+        addTodo(newText)
 
         inputRef.current.value = ''
     }
@@ -148,6 +152,13 @@ const TodoList = memo(function TodoList(prop) {
     const [todos, setTodos] = useState([]);
     const [incrementCount, setIncrementCount] = useState(0);
 
+    useEffect(() => {
+        Object.assign(store, {
+            todos,
+            incrementCount,
+        })
+    },[todos, incrementCount])
+
     const addTodo = useCallback(todo => {
         setTodos(todos => [...todos, todo]);
     },[]);
@@ -215,15 +226,23 @@ const TodoList = memo(function TodoList(prop) {
     // }
 
     const dispatch = useCallback((action) => {
-        const state = {
-            todos,
-            incrementCount,
-        };
+        // const state = {
+        //     todos,
+        //     incrementCount,
+        // };
         const setters = {
             todos: setTodos,
             incrementCount: setIncrementCount
         }
-        const newState = reducer(state, action);
+
+        if("function" === typeof action){
+            // action(dispatch, state)
+            action(dispatch, ()=>store)
+            return
+        }
+
+        // const newState = reducer(state, action);
+        const newState = reducer(store, action);
 
         for(let key in newState) {
             setters[key](newState[key]);
@@ -231,7 +250,9 @@ const TodoList = memo(function TodoList(prop) {
             // console.log(newState, "newState");
         }
 
-    },[todos, incrementCount])
+    }
+    // ,[todos, incrementCount]
+    )
 
     useEffect(() => {
         const todos = JSON.parse(localStorage.getItem(LS_KEY) || '[]');
