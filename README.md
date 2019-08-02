@@ -43,3 +43,38 @@
 ### hooks常见问题
 - ![react-hooks](https://github.com/vue-then/react-hooks/blob/master/img/2.png)
 
+### PWA
+- Progressive Web App 间接式网络应用
+- Service Worker
+```
+服务工作线程
+    常驻内存运行
+    代理网络请求
+    依赖HTTPS
+```
+- Promise
+```
+控制流
+async/await语法同步化
+service worker 的API风格
+```
+- fetch
+```
+网络请求
+    比XMLHttpRequest更简洁
+    Promise风格
+    依旧存在不足（不支持progress清除报告，不能中断）
+```
+- cache API
+```
+支持资源的缓存系统
+    缓存资源(css/script/image)
+    依赖Service Worker代理网络请求
+    支持离线程序运行
+```
+- Notification API
+```
+消息推送
+    依赖用户授权
+    适合在Service Worker中推送
+```
