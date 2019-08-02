@@ -6,6 +6,7 @@ import {
 ,createToggle
 } from './actions';
 import './App.css';
+import reducer from './reducers.js'
 
 // class App extends Component {
 // 	render() {
@@ -13,6 +14,8 @@ import './App.css';
 //   }
 // }
 let idSeq = Date.now();
+
+
 
 function bindActionCreators(actionCreators, dispatch) {
     const ret = {};
@@ -169,53 +172,47 @@ const TodoList = memo(function TodoList(prop) {
     // actions.reducer(function (lastTodos, action) {
     //     return [...lastTodos, action.payload];
     // }, todos)
-    // const reducers = {
-    //     todos(state, action) {
-    //         const { type, payload } = action;
-    //     },
-    //     incrementCount(state, action) {
+    
 
+    // function reducer(state, action) {
+    //     const {type, payload} = action;
+    //     const {todos, incrementCount} = state;
+
+    //     switch(type) {
+    //         case 'set':
+    //             return {
+    //                 ...state,
+    //                 todos: payload,
+    //                 incrementCount: incrementCount + 1,
+    //             }
+    //         case 'add':
+    //             return {
+    //                 ...state,
+    //                 todos: [...todos, payload],
+    //                 incrementCount: incrementCount + 1,
+    //             }
+    //         case 'remove':
+    //             return {
+    //                 ...state,
+    //                 todos: todos.filter(todo => {
+    //                     return todo.id !== payload;
+    //                 })
+    //             }
+    //         case 'toggle':
+    //             return {
+    //                 ...state,
+    //                 todos: todos.map(todo => {
+    //                     return todo.id === payload
+    //                         ? {
+    //                             ...todo,
+    //                             complete: !todo.complete,
+    //                         }
+    //                         : todo;
+    //                 })
+    //             }
     //     }
+    //     return state;
     // }
-
-    function reducer(state, action) {
-        const {type, payload} = action;
-        const {todos, incrementCount} = state;
-
-        switch(type) {
-            case 'set':
-                return {
-                    ...state,
-                    todos: payload,
-                    incrementCount: incrementCount + 1,
-                }
-            case 'add':
-                return {
-                    ...state,
-                    todos: [...todos, payload],
-                    incrementCount: incrementCount + 1,
-                }
-            case 'remove':
-                return {
-                    ...state,
-                    todos: todos.filter(todo => {
-                        return todo.id !== payload;
-                    })
-                }
-            case 'toggle':
-                return {
-                    ...state,
-                    todos: todos.map(todo => {
-                        return todo.id === payload
-                            ? {
-                                ...todo,
-                                complete: !todo.complete,
-                            }
-                            : todo;
-                    })
-                }
-        }
-    }
 
     const dispatch = useCallback((action) => {
         const state = {
