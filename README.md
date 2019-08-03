@@ -78,3 +78,8 @@ service worker 的API风格
     依赖用户授权
     适合在Service Worker中推送
 ```
+
+### 如何在项目中开启PWA
+- https://developers.google.com/web/tools/workbox/
+
+
