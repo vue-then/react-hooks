@@ -1,0 +1,17 @@
+{
+  "name": "train-mock",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "dayjs": "^1.8.13",
+    "mocker-api": "^1.7.4"
+  }
+}
