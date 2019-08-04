@@ -3,6 +3,7 @@
 - nvm use v10.15.3
 - npx create-react-app projectName
 - 此工程为MPA
+- 一次选中所有所需对象，并将选中字符直接转换为大写
 
 ### 相关地址
 https://touch.train.qunar.com
@@ -84,3 +85,13 @@ service worker 的API风格
 
 ### 如何在项目中开启PWA
 - https://developers.google.com/web/tools/workbox/
+
+
+### 任务拆解
+- React 视觉组件拆分
+- redux store 状态涉及
+- redux action/reducer 设计
+
+
+
+

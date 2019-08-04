@@ -4,4 +4,6 @@ npm i
 node index.js
 cd ../
 yarn start
+
+fetch("/rest/cities")
 ```
