@@ -44,6 +44,7 @@ function App(props) {
         },dispatch)
     },[])
 
+    // dispatch ==> action->reducer => set state
     const citySelectorCbs = useMemo(()=>{
         return bindActionCreators({
             onBack: hideCitySelector,
