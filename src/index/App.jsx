@@ -8,6 +8,8 @@ import HighSpeed from './HighSpeed.jsx'
 import Journey from './Journey.jsx'
 import Submit from './Submit.jsx'
 
+import CitySelector from '../common/CitySelector.jsx'
+
 import {
     exchangeFromTo,
     showCitySelector,
@@ -19,6 +21,9 @@ function App(props) {
     const {
         from,
         to,
+        isCitySelectorVisible,
+        cityData,
+        isLoadingCityData,
         dispatch,
     } = props;
 
@@ -39,23 +44,35 @@ function App(props) {
         },dispatch)
     },[])
 
+    const citySelectorCbs = useMemo(()=>{
+        return bindActionCreators({
+            onBack: hideCitySelector,
+        }, dispatch)
+    }, []);
+
     return (
 			<div>
 				<div className="header-wrapper">
 					<Header title="火车票" onBack={onBack} />
 				</div>
-                <form action="./query.html" className="form">
-                    <Journey
-                        from={from}
-                        to={to}
-                        // exchangeFromTo={doExchangeFromTo}
-                        // showCitySelector={doShowCitySelector}
-                        {...cbs}
-                    />
-                </form>
+				<form action="./query.html" className="form">
+					<Journey
+						from={from}
+						to={to}
+						// exchangeFromTo={doExchangeFromTo}
+						// showCitySelector={doShowCitySelector}
+						{...cbs}
+					/>
+				</form>
 				<DepartDate />
 				<HighSpeed />
 				<Submit />
+				<CitySelector
+					show={isCitySelectorVisible}
+					cityData={cityData}
+					isLoading={isLoadingCityData}
+					{...citySelectorCbs}
+				/>
 			</div>
 		);
 }

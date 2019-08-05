@@ -12,7 +12,7 @@ export default function Journey(props) {
     return(
         <div className='journey'>
             <div className="journey-station"
-                onClick={() => showCitySelector(false)}>
+                onClick={() => showCitySelector(true)}>
                 <input
                     type="text"
                     readOnly
