@@ -8,32 +8,63 @@ import HighSpeed from './HighSpeed.jsx'
 import Journey from './Journey.jsx'
 import Submit from './Submit.jsx'
 
+import {
+    exchangeFromTo,
+    showCitySelector,
+    hideCitySelector,
+} from './actions';
+import { bindActionCreators } from "redux";
 
 function App(props) {
+    const {
+        from,
+        to,
+        dispatch,
+    } = props;
 
     // App的重新渲染 onBack不会都是同一个方法
     const onBack = useCallback(() => {
 			window.history.back();
         }, []);
-        
-    return(
-        <div>
-            <div className="header-wrapper">
-                <Header title="火车票" onBack={onBack} />
-            </div>
-            <DepartDate/>
-            <HighSpeed/>
-            <Journey/>
-            <Submit/>
-        </div>
-    )
+    // const doExchangeFromTo = useCallback(() => {
+    //     dispatch(exchangeFromTo())
+    // },[]);
+    // const doShowCitySelector = useCallback(m => {
+    //     dispatch(showCitySelector(m))
+    // },[]); 
+    const cbs = useMemo(()=>{
+        return bindActionCreators({
+            exchangeFromTo,
+            showCitySelector,
+        },dispatch)
+    },[])
+
+    return (
+			<div>
+				<div className="header-wrapper">
+					<Header title="火车票" onBack={onBack} />
+				</div>
+                <form action="./query.html" className="form">
+                    <Journey
+                        from={from}
+                        to={to}
+                        // exchangeFromTo={doExchangeFromTo}
+                        // showCitySelector={doShowCitySelector}
+                        {...cbs}
+                    />
+                </form>
+				<DepartDate />
+				<HighSpeed />
+				<Submit />
+			</div>
+		);
 }
 
 export default connect(
     function mapStateToProps(state) {
-        return {};
+        return state;
     },
     function mapDispatchToProps(dispatch) {
-        return {};
+        return {dispatch};
     }
 )(App)
