@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useMemo } from "react";
 import { connect } from "react-redux";
 import './App.css';
 
@@ -10,9 +10,17 @@ import Submit from './Submit.jsx'
 
 
 function App(props) {
+
+    // App的重新渲染 onBack不会都是同一个方法
+    const onBack = useCallback(() => {
+			window.history.back();
+        }, []);
+        
     return(
         <div>
-            <Header/>
+            <div className="header-wrapper">
+                <Header title="火车票" onBack={onBack} />
+            </div>
             <DepartDate/>
             <HighSpeed/>
             <Journey/>
