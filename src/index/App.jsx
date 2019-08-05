@@ -14,6 +14,7 @@ import {
     exchangeFromTo,
     showCitySelector,
     hideCitySelector,
+    fetchCityData,
 } from './actions';
 import { bindActionCreators } from "redux";
 
@@ -48,6 +49,7 @@ function App(props) {
     const citySelectorCbs = useMemo(()=>{
         return bindActionCreators({
             onBack: hideCitySelector,
+            fetchCityData
         }, dispatch)
     }, []);
 
