@@ -15,7 +15,9 @@ import {
 	showCitySelector,
 	hideCitySelector,
 	fetchCityData,
-	setSelectedCity
+	setSelectedCity,
+	showDateSelector,
+	hideDateSelector
 } from "./actions";
 import { bindActionCreators } from "redux";
 
@@ -27,6 +29,7 @@ function App(props) {
         cityData,
         isLoadingCityData,
         dispatch,
+        departDate
     } = props;
 
     // App的重新渲染 onBack不会都是同一个方法
@@ -55,6 +58,12 @@ function App(props) {
         }, dispatch)
     }, []);
 
+    const departDateCbs = useMemo(() => {
+        return bindActionCreators({
+            onClick: showDateSelector,
+        }, dispatch);
+    }, []);
+
     return (
 			<div>
 				<div className="header-wrapper">
@@ -68,10 +77,13 @@ function App(props) {
 						// showCitySelector={doShowCitySelector}
 						{...cbs}
 					/>
-				</form>
-				<DepartDate />
-				<HighSpeed />
-				<Submit />
+                    <DepartDate 
+                        time={departDate}
+                        {...departDateCbs}
+                    />
+                    <HighSpeed />
+                    <Submit />
+                </form>
 				<CitySelector
 					show={isCitySelectorVisible}
 					cityData={cityData}
