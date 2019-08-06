@@ -21,7 +21,8 @@ import {
 	setSelectedCity,
 	showDateSelector,
 	hideDateSelector,
-	setDepartDate
+    setDepartDate,
+    toggleHighSpeed,
 } from "./actions";
 import { bindActionCreators } from "redux";
 
@@ -35,6 +36,7 @@ function App(props) {
         dispatch,
         departDate,
         isDateSelectorVisible,
+        highSpeed,
     } = props;
 
     // App的重新渲染 onBack不会都是同一个方法
@@ -87,7 +89,11 @@ function App(props) {
         dispatch(setDepartDate(day));
         dispatch(hideDateSelector())
     }, []);
-
+    const highSpeedCbs = useMemo(() => {
+        return bindActionCreators({
+            toggle: toggleHighSpeed,
+        }, dispatch);
+    }, []);
 
     return (
 			<div>
@@ -106,7 +112,10 @@ function App(props) {
                         time={departDate}
                         {...departDateCbs}
                     />
-                    <HighSpeed />
+                    <HighSpeed
+                        highSpeed={highSpeed}
+                        {...highSpeedCbs}
+                    />
                     <Submit />
                 </form>
 				<CitySelector
