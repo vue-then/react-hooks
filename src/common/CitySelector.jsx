@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo} from 'react';
+import React, { useState, useEffect, useMemo, memo, useCallback } from "react";
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import "./CitySelector.css";
@@ -29,17 +29,21 @@ function CitySection(props) {
     } = props;
 
     return (
-        <ul className="city-ul">
-            <li className="city-li" key={title}>
-                {title}
-            </li>
-            {
-                cities.map(city => {
-                    return <CityItem key={city.name} name={city.name} onSelect={onSelect}/>
-                })
-            }
-        </ul>
-    )
+			<ul className="city-ul">
+				<li className="city-li" key={title} data-cate={title}>
+					{title}
+				</li>
+				{cities.map(city => {
+					return (
+						<CityItem
+							key={city.name}
+							name={city.name}
+							onSelect={onSelect}
+						/>
+					);
+				})}
+			</ul>
+		);
 }
 CitySection.propTypes = {
 	title: PropTypes.string.isRequired,
@@ -47,10 +51,33 @@ CitySection.propTypes = {
 	onSelect: PropTypes.func.isRequired
 };
 
+const AlphaIndex = memo(function AlphaIndex(props) {
+    const {
+        alpha,
+        onClick,
+    } = props;
+
+    return (
+        <i className="city-index-item" onClick={() => onClick(alpha)}>
+            {alpha}
+        </i>
+    );
+});
+
+AlphaIndex.propTypes = {
+    alpha: PropTypes.string.isRequired,
+    onClick: PropTypes.func.isRequired,
+};
+
+const alphabet = Array.from(new Array(26), (ele, index) => {
+	return String.fromCharCode(65 + index);
+});
+
 function CityList(props) {
     const {
         sections,
         onSelect,
+        toAlpha
     } = props;
 
     return (
@@ -65,6 +92,18 @@ function CityList(props) {
                                 cities={section.citys}
                                 onSelect={onSelect}
                             />
+                        );
+                    })
+                }
+            </div>
+            <div className="city-index">
+                {
+                    alphabet.map(alpha => {
+                        return (
+                            <AlphaIndex
+                                key={alpha}
+                                alpha={alpha}
+                                onClick={toAlpha} />
                         );
                     })
                 }
@@ -97,7 +136,11 @@ export default function CitySelector(props) {
 			return;
 		}
 		fetchCityData();
-	}, [show, cityData, isLoading])
+    }, [show, cityData, isLoading])
+    
+    const toAlpha = useCallback(alpha => {
+			document.querySelector(`[data-cate='${alpha}']`).scrollIntoView();
+		}, []);
     
     const outputCitySections = () => {
         if(isLoading) {
@@ -109,6 +152,7 @@ export default function CitySelector(props) {
                 <CityList
                     sections={cityData.cityList}
                     onSelect={onSelect}
+                    toAlpha={toAlpha}
                 />
             )
         }

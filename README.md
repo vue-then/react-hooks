@@ -14,7 +14,7 @@ https://touch.train.qunar.com
 - ContextType
 - lazy
 - Suspense
-- memo
+- memo (pureComponent 第二次不重新渲染)
 
 ### 类组件不足（一）
 1，状态逻辑复用难
@@ -106,5 +106,11 @@ service worker 的API风格
     top: -1px;
     border-bottom: 0;
 }
+// 快速定位字母
+const toAlpha = useCallback(alpha => {
+    document.querySelector(`[data-cate='${alpha}']`).scrollIntoView();
+}, []);
+
+
 ```
 
