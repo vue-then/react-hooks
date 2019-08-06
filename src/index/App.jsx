@@ -11,11 +11,12 @@ import Submit from './Submit.jsx'
 import CitySelector from '../common/CitySelector.jsx'
 
 import {
-    exchangeFromTo,
-    showCitySelector,
-    hideCitySelector,
-    fetchCityData,
-} from './actions';
+	exchangeFromTo,
+	showCitySelector,
+	hideCitySelector,
+	fetchCityData,
+	setSelectedCity
+} from "./actions";
 import { bindActionCreators } from "redux";
 
 function App(props) {
@@ -49,7 +50,8 @@ function App(props) {
     const citySelectorCbs = useMemo(()=>{
         return bindActionCreators({
             onBack: hideCitySelector,
-            fetchCityData
+            fetchCityData,
+            onSelect: setSelectedCity
         }, dispatch)
     }, []);
 

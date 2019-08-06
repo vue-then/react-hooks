@@ -93,5 +93,18 @@ service worker 的API风格
 - redux action/reducer 设计
 
 
-
+### 底部滑动必要样式
+```
+.city-li:first-child {
+    height: 30px;
+    line-height: 30px;
+    font-size: 12px;
+    background-color: #f2f8fb;
+    padding: 0 15px;
+    margin-left: 0;
+    position: sticky; /* !important */
+    top: -1px;
+    border-bottom: 0;
+}
+```
 
