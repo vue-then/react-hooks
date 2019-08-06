@@ -110,7 +110,15 @@ service worker 的API风格
 const toAlpha = useCallback(alpha => {
     document.querySelector(`[data-cate='${alpha}']`).scrollIntoView();
 }, []);
-
-
 ```
+### 将数组按7个一组 重新分组
+```
+const weeks = [];
+let days = [1,2,3,3,5,5,5,5,5,5,54,5,5,5,5,5,5,5,5,5,5]
 
+for (let row = 0; row < days.length / 7; ++row) {
+    const week = days.slice(row * 7, (row + 1) * 7);
+    weeks.push(week);
+}
+console.log(weeks,'weeks')
+```

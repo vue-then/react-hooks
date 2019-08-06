@@ -9,6 +9,9 @@ import Journey from './Journey.jsx'
 import Submit from './Submit.jsx'
 
 import CitySelector from '../common/CitySelector.jsx'
+import DateSelector from "../common/DateSelector.jsx";
+
+import { h0 } from "../common/fp";
 
 import {
 	exchangeFromTo,
@@ -17,7 +20,8 @@ import {
 	fetchCityData,
 	setSelectedCity,
 	showDateSelector,
-	hideDateSelector
+	hideDateSelector,
+	setDepartDate
 } from "./actions";
 import { bindActionCreators } from "redux";
 
@@ -29,7 +33,8 @@ function App(props) {
         cityData,
         isLoadingCityData,
         dispatch,
-        departDate
+        departDate,
+        isDateSelectorVisible,
     } = props;
 
     // App的重新渲染 onBack不会都是同一个方法
@@ -64,6 +69,26 @@ function App(props) {
         }, dispatch);
     }, []);
 
+    const dateSelectorCbs = useMemo(() => {
+        return bindActionCreators({
+            onBack: hideDateSelector,
+        }, dispatch);
+    }, []);
+
+    const onSelectDate = useCallback((day) => {
+        if (!day) {
+            return;
+        }
+
+        if (day < h0()) {
+            return;
+        }
+
+        dispatch(setDepartDate(day));
+        dispatch(hideDateSelector())
+    }, []);
+
+
     return (
 			<div>
 				<div className="header-wrapper">
@@ -90,6 +115,11 @@ function App(props) {
 					isLoading={isLoadingCityData}
 					{...citySelectorCbs}
 				/>
+                <DateSelector
+                    show={isDateSelectorVisible}
+                    {...dateSelectorCbs}
+                    onSelect={onSelectDate}
+                />
 			</div>
 		);
 }
