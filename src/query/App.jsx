@@ -162,9 +162,9 @@ function App(props) {
         next,
     } = useNav(departDate, dispatch, prevDate, nextDate);
 
-    // if (!searchParsed) {
-    //     return;
-    // }
+    if (!searchParsed) {
+        return null;
+    }
     
 
     return (
@@ -179,7 +179,7 @@ function App(props) {
                 prev={prev}
                 next={next}
             />
-            <List/>
+            <List list={trainList} />
             <Bottom/>
         </div>
     )
