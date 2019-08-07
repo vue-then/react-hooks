@@ -3,7 +3,14 @@
 - nvm use v10.15.3
 - npx create-react-app projectName
 - 此工程为MPA
-- 一次选中所有所需对象，并将选中字符直接转换为大写
+
+### vscode 快捷键
+```
+多次选中 option+command+up/down
+选中当前行 command+shift+up/down
+设置变换大小写 command+u+command+p/command+l+command+o
+vscode安装 change-case 驼峰与大小写互转
+```
 
 ### 相关地址
 https://touch.train.qunar.com
