@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { connect } from "react-redux";
 import URI from "urijs";
 import dayjs from "dayjs";
+import { bindActionCreators } from "redux";
 
 import { h0 } from "../common/fp";
 
@@ -162,6 +163,23 @@ function App(props) {
         next,
     } = useNav(departDate, dispatch, prevDate, nextDate);
 
+    const bottomCbs = useMemo(() => {
+        return bindActionCreators({
+            toggleOrderType,
+            toggleHighSpeed,
+            toggleOnlyTickets,
+            toggleIsFiltersVisible,
+            setCheckedTicketTypes,
+            setCheckedTrainTypes,
+            setCheckedDepartStations,
+            setCheckedArriveStations,
+            setDepartTimeStart,
+            setDepartTimeEnd,
+            setArriveTimeStart,
+            setArriveTimeEnd,
+        }, dispatch);
+    }, []);
+
     if (!searchParsed) {
         return null;
     }
@@ -179,8 +197,42 @@ function App(props) {
                 prev={prev}
                 next={next}
             />
-            <List list={trainList} />
-            <Bottom/>
+            <List 
+                highSpeed={highSpeed}
+                orderType={orderType}
+                onlyTickets={onlyTickets}
+                isFiltersVisible={isFiltersVisible}
+                ticketTypes={ticketTypes}
+                trainTypes={trainTypes}
+                departStations={departStations}
+                arriveStations={arriveStations}
+                checkedTicketTypes={checkedTicketTypes}
+                checkedTrainTypes={checkedTrainTypes}
+                checkedDepartStations={checkedDepartStations}
+                checkedArriveStations={checkedArriveStations}
+                departTimeStart={departTimeStart}
+                departTimeEnd={departTimeEnd}
+                arriveTimeStart={arriveTimeStart}
+                arriveTimeEnd={arriveTimeEnd}
+                list={trainList} />
+            <Bottom 
+                highSpeed={highSpeed}
+                orderType={orderType}
+                onlyTickets={onlyTickets}
+                isFiltersVisible={isFiltersVisible}
+                ticketTypes={ticketTypes}
+                trainTypes={trainTypes}
+                departStations={departStations}
+                arriveStations={arriveStations}
+                checkedTicketTypes={checkedTicketTypes}
+                checkedTrainTypes={checkedTrainTypes}
+                checkedDepartStations={checkedDepartStations}
+                checkedArriveStations={checkedArriveStations}
+                departTimeStart={departTimeStart}
+                departTimeEnd={departTimeEnd}
+                arriveTimeStart={arriveTimeStart}
+                arriveTimeEnd={arriveTimeEnd}
+            {...bottomCbs}/>
         </div>
     )
 
