@@ -22,6 +22,7 @@
 选中当前行的头部、尾部 cmd+shift+左右键
 同时编辑多处，多个光标 快捷键 ===> cmd+shift+拖动箭头至选中效果
 选中当前光标所在单词 cmd+d
+选中当前光标所在单词的尾部 cmd+option
 
 格式化 option+shift+f
 vscode安装 Better Align 左右对齐 option+= / shift+option+=
