@@ -5,6 +5,15 @@
 - npx create-react-app projectName
 - 此工程为 MPA
 
+### webpack 打包分析器
+```
+npm i webpack-bundle-analyzer -D
+yarn add webpack-bundle-analyzer -D
+
+https://github.com/webpack-contrib/webpack-bundle-analyzer
+
+```
+
 ### vscode 快捷键 mac
 
 ```
