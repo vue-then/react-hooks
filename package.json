@@ -146,6 +146,7 @@
     ]
   },
   "devDependencies": {
-    "eslint-plugin-react-hooks": "^1.6.1"
+    "eslint-plugin-react-hooks": "^1.6.1",
+    "webpack-bundle-analyzer": "^3.4.1"
   }
 }

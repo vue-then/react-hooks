@@ -5,6 +5,15 @@
 - npx create-react-app projectName
 - 此工程为 MPA
 
+### webpack 打包分析器
+```
+npm i webpack-bundle-analyzer -D
+yarn add webpack-bundle-analyzer -D
+
+https://github.com/webpack-contrib/webpack-bundle-analyzer
+
+```
+
 ### vscode 快捷键 mac
 
 ```
@@ -22,6 +31,7 @@
 选中当前行的头部、尾部 cmd+shift+左右键
 同时编辑多处，多个光标 快捷键 ===> cmd+shift+拖动箭头至选中效果
 选中当前光标所在单词 cmd+d
+选中当前光标所在单词的尾部 cmd+option
 
 格式化 option+shift+f
 vscode安装 Better Align 左右对齐 option+= / shift+option+=
