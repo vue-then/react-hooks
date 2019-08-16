@@ -1,3 +1,12 @@
+### 如何启动
+```
+切换到dev-ticket-project分支
+cd train-mock
+npm i
+node index.js
+再开一个terminal启动切换至项目根目录 运行`yarn start`
+```
+
 ### react-hooks
 
 - some of usehooks
